@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://1bitpack_kenney_1.1/crosshair.png" type="Texture" id=1]
+[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://tiles.meshlib" type="MeshLibrary" id=4]
+[ext_resource path="res://1bitpack_kenney_1.1/Tilesheet/colored_transparent_packed.png" type="Texture" id=5]
+[ext_resource path="res://Weapon.tscn" type="PackedScene" id=6]
+
+[sub_resource type="SphereShape" id=1]
+radius = 0.608963
+
+[sub_resource type="CapsuleShape" id=2]
+radius = 0.119911
+height = 0.151178
+
+[node name="World" type="Spatial"]
+
+[node name="Player" type="KinematicBody" parent="."]
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Player"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player"]
+
+[node name="TextureRect" type="TextureRect" parent="Player/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -7.0
+margin_top = -7.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera" type="Camera" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.374485, 0 )
+current = true
+
+[node name="RayCast" type="RayCast" parent="Player"]
+cast_to = Vector3( 0, 0, -2000 )
+
+[node name="Enemy" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00724524, 0.000107288, -2.76281 )
+
+[node name="Enemy2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.82981, -0.15501, -2.41858 )
+
+[node name="Enemy3" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28209, 0.175556, -4.2437 )
+
+[node name="Enemy4" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.248257, -0.104706, -5.03479 )
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource( 4 )
+data = {
+"cells": PoolIntArray( 5, 0, 0, 6, 0, 0, 65532, 0, 1048576, -65534, 0, 1048577, -65532, 0, 1048577, -65531, 0, 0, -4, 0, 1048576, 5, 1, 1048576, 6, 1, 0, 65532, 1, 1048576, -65536, 1, 1048577, -65531, 1, 0, -65530, 1, 0, -4, 1, 1048576, -2, 1, 1048577, 6, 2, 0, 65532, 2, 1048576, -65534, 2, 1048577, -65532, 2, 1048577, -65530, 2, 1048577, -5, 2, 1048576, -4, 2, 1048576, 6, 3, 1048576, 65532, 3, 1048576, -65536, 3, 1048577, -65530, 3, 0, -5, 3, 1048576, -4, 3, 1048576, -2, 3, 1048577, 0, 4, 1048576, 1, 4, 1048576, 2, 4, 1048576, 6, 4, 1048576, 65532, 4, 1048576, 65533, 4, 1048576, 65534, 4, 1048576, 65535, 4, 1048576, -65536, 4, 1048576, -65535, 4, 1048577, -65533, 4, 1048577, -65531, 4, 1048577, -65530, 4, 1048576, -6, 4, 1048576, -5, 4, 1048576, -4, 4, 1048576, -3, 4, 1048576, -2, 4, 1048576, -1, 4, 1048576, 3, 5, 1048576, 4, 5, 1048576, 5, 5, 1048576, 6, 5, 1048576, -65533, 5, 0, -65532, 5, 0, -65531, 5, 0, -65530, 5, 0, -65523, 6, 1441792, -65536, 65529, 1048577, -2, 65529, 1048577, 1, 65530, 1048576, 2, 65530, 1048576, 3, 65530, 1048576, 4, 65530, 1048576, 5, 65530, 1048576, -65535, 65530, 1048576, -65534, 65530, 1048576, -65533, 65530, 1048576, -65532, 65530, 1048576, 5, 65531, 1048576, -65536, 65531, 1048577, -65531, 65531, 1048576, -2, 65531, 1048577, 5, 65532, 0, 65533, 65532, 1048576, -65534, 65532, 1048577, -65532, 65532, 1048577, -65531, 65532, 0, -3, 65532, 1048576, 5, 65533, 0, 65533, 65533, 1048576, -65536, 65533, 1048577, -65531, 65533, 0, -3, 65533, 1048576, -2, 65533, 1048577, 5, 65534, 0, 65533, 65534, 1048576, -65534, 65534, 1048577, -65532, 65534, 1048577, -65531, 65534, 1048576, -65527, 65534, 1441792, -3, 65534, 1048576, 5, 65535, 0, 65533, 65535, 1048576, -65536, 65535, 1048577, -65531, 65535, 0, -4, 65535, 1048577, -3, 65535, 1048576, -2, 65535, 1048577 )
+}
+__meta__ = {
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, -1, 0 )
+}
+
+[node name="Dagger" parent="." instance=ExtResource( 6 )]
+
+[node name="Projectile" type="KinematicBody" parent="Dagger"]
+transform = Transform( -0.138671, -0.13159, 0.981557, -0.688342, 0.725386, 0, -0.712008, -0.675647, -0.191169, 0.467, 0.479, -0.831 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Dagger/Projectile"]
+transform = Transform( 1, -5.96046e-08, 0, 0, 1, 0, 0, -1.49012e-08, 1, 0, 0, 0 )
+pixel_size = 0.05
+texture = ExtResource( 5 )
+region_enabled = true
+region_rect = Rect2( 544, 96, 16, 16 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Dagger/Projectile"]
+transform = Transform( 0.53691, -0.448723, -0.714405, -0.43001, 0.582993, -0.689355, 0.725823, 0.677323, 0.120059, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="RayCast" type="RayCast" parent="Dagger/Projectile"]
+transform = Transform( 0.78366, 0.131363, -0.607141, 0.620723, -0.127699, 0.773561, 0.0240855, -0.983075, -0.181613, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0.5, 0, 0 )
