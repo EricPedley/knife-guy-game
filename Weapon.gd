@@ -1,4 +1,4 @@
-extends RigidBody
+extends KinematicBody
 
 
 # Declare member variables here. Examples:
@@ -14,17 +14,24 @@ func set_parent(newParent):
 	parent=newParent
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_bounce(0)
-	set_parent(get_node("../Player"))
+	set_parent(player)
 	#$AnimationPlayer.play("Hover")
-	
-func _process(delta):
-	if parent==player and not shooting:
-		if mode!=MODE_STATIC:
-			mode=MODE_STATIC
-		global_transform = player.WeaponPoint.global_transform
+
+func _physics_process(delta):
+	if shooting:
+		if $RayCast.is_colliding():#when the knife hits something
+			shooting=false
+			velocity=Vector3()
+			var collider = $RayCast.get_collider()
+			if collider.is_in_group("enemies"):
+				parent=collider
+				parent.WeaponPoint.global_transform = global_transform
+		else:
+			move_and_collide(velocity*delta) 
+	elif parent==player or parent.is_in_group("enemies"):
+		global_transform = parent.WeaponPoint.global_transform
 		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))
 func shoot(vector):
-	mode=MODE_RIGID
 	shooting=true
-	apply_central_impulse(vector.normalized()*100)
+	velocity = vector.normalized()*100
+	look_at(velocity,Vector3(0,1,0))
