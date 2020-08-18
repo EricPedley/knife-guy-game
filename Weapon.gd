@@ -21,8 +21,7 @@ func _process(delta):
 	if parent==player and not shooting:
 		if mode!=MODE_STATIC:
 			mode=MODE_STATIC
-		var plPos = player.WeaponPoint.global_transform.origin
-		global_transform.origin = plPos
+		global_transform = player.WeaponPoint.global_transform
 		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))
 func shoot(vector):
 	mode=MODE_RIGID
