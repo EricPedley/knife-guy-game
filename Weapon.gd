@@ -29,10 +29,11 @@ func _physics_process(delta):
 				parent.WeaponPoint.global_transform = global_transform
 		else:
 			move_and_collide(velocity*delta) 
-	elif parent==player or parent.is_in_group("enemies"):
+	elif parent!=null and (parent==player or parent.is_in_group("enemies")):
 		global_transform = parent.WeaponPoint.global_transform
 		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))
 func shoot(vector):
 	shooting=true
 	velocity = vector.normalized()*10
 	look_at(velocity,Vector3(0,1,0))
+	parent=null

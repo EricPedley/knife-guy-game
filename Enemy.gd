@@ -30,3 +30,4 @@ func set_player(p):
 func die():
 	dead=true
 	animationPlayer.play("die")
+	$CollisionShape.set_disabled(true)
