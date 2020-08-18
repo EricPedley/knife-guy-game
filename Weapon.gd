@@ -16,6 +16,10 @@ func set_parent(newParent):
 func _ready():
 	set_parent(player)
 	#$AnimationPlayer.play("Hover")
+	
+func _process(delta):
+	if(Input.is_action_just_pressed("lclick")):
+		shoot(global_transform.origin.direction_to(player.global_transform.origin))
 
 func _physics_process(delta):
 	if shooting:
@@ -27,6 +31,8 @@ func _physics_process(delta):
 				parent=collider
 				parent.die()
 				parent.WeaponPoint.global_transform = global_transform
+			elif collider==player:
+				parent=collider
 		else:
 			move_and_collide(velocity*delta) 
 	elif parent!=null and (parent==player or parent.is_in_group("enemies")):
@@ -34,6 +40,6 @@ func _physics_process(delta):
 		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))
 func shoot(vector):
 	shooting=true
-	velocity = vector.normalized()*10
+	velocity = vector.normalized()*30
 	look_at(velocity,Vector3(0,1,0))
 	parent=null

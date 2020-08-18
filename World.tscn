@@ -38,10 +38,10 @@ radius = 0.207787
 [node name="World" type="Spatial"]
 
 [node name="Dagger" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77857, 0, -1.92935 )
+transform = Transform( 0.860039, -0.491364, 0.13746, 0.508697, 0.846614, -0.156434, -0.039509, 0.204465, 0.978076, 1.77857, 0, -1.92935 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Dagger"]
-transform = Transform( 0.854458, -0.500385, 0.139701, 0.518319, 0.839358, -0.163779, -0.0353067, 0.212352, 0.976555, 1.19209e-07, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 1.19209e-07, 0, 0 )
 shape = SubResource( 4 )
 disabled = true
 
@@ -107,7 +107,10 @@ autoplay = "Hover"
 anims/Hover = SubResource( 5 )
 
 [node name="Enemy" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00724524, 0.000107288, -2.76281 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00724524, 0.808008, -2.76281 )
+
+[node name="Enemy2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00724524, 0.881665, -6.78135 )
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource( 4 )
