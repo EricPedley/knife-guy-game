@@ -40,6 +40,6 @@ func _physics_process(delta):
 		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))
 func shoot(vector):
 	shooting=true
-	velocity = vector.normalized()*30
+	velocity = vector.normalized()*50
 	look_at(velocity,Vector3(0,1,0))
 	parent=null
