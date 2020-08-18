@@ -25,6 +25,7 @@ func _physics_process(delta):
 			var collider = $RayCast.get_collider()
 			if collider.is_in_group("enemies"):
 				parent=collider
+				parent.die()
 				parent.WeaponPoint.global_transform = global_transform
 		else:
 			move_and_collide(velocity*delta) 
@@ -33,5 +34,5 @@ func _physics_process(delta):
 		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))
 func shoot(vector):
 	shooting=true
-	velocity = vector.normalized()*100
+	velocity = vector.normalized()*10
 	look_at(velocity,Vector3(0,1,0))
