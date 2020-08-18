@@ -14,6 +14,7 @@ func set_parent(newParent):
 	parent=newParent
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	set_bounce(0)
 	set_parent(get_node("../Player"))
 	#$AnimationPlayer.play("Hover")
 	
@@ -26,4 +27,4 @@ func _process(delta):
 func shoot(vector):
 	mode=MODE_RIGID
 	shooting=true
-	apply_central_impulse(vector.normalized()*60)
+	apply_central_impulse(vector.normalized()*100)
