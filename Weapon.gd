@@ -16,16 +16,19 @@ func _ready():
 	set_parent(get_node("../Player"))
 	$AnimationPlayer.play("Hover")
 func _physics_process(delta):
-	$Projectile.translation = parent.translation + Vector3(0.5,0.5,-1).rotated(Vector3(1,0,0),parent.rotation.x).rotated(Vector3(0,1,0),parent.rotation.y)
-	$Projectile.rotation.y = parent.rotation.y+PI/2
+	if($Projectile!=null):
+		print($Projectile)
+		$Projectile.translation = parent.translation + Vector3(0.5,0.5,-1).rotated(Vector3(1,0,0),parent.rotation.x).rotated(Vector3(0,1,0),parent.rotation.y)
+		$Projectile.rotation.y = parent.rotation.y+PI/2
 	if shooting:
 		$Projectile.move_and_collide(velocity*delta)
 		if rayCast.is_colliding():
+			shooting=false
+			velocity=Vector3.ZERO
 			var impactPoint = rayCast.get_collision_point()
 			$AnimationPlayer.play("still")
-			velocity=Vector3()
-			var newWeapon = self.duplicate();
-			print(impactPoint)
+			rayCast.get_collider().add_child(duplicate())
+			get_parent().remove_child(self);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
