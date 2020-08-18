@@ -2,7 +2,7 @@ extends KinematicBody
 
 const MOVE_SPEED =10
 const MOUSE_SENS = 0.5
-
+onready var WeaponPoint = $WeaponPoint
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	yield(get_tree(),"idle_frame")

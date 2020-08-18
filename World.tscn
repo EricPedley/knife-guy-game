@@ -1,20 +1,41 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://1bitpack_kenney_1.1/crosshair.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://tiles.meshlib" type="MeshLibrary" id=4]
-[ext_resource path="res://1bitpack_kenney_1.1/Tilesheet/colored_transparent_packed.png" type="Texture" id=5]
+[ext_resource path="res://Weapon.gd" type="Script" id=5]
 [ext_resource path="res://Weapon.tscn" type="PackedScene" id=6]
+[ext_resource path="res://1bitpack_kenney_1.1/Tilesheet/colored_transparent_packed.png" type="Texture" id=7]
+[ext_resource path="res://1bitpack_kenney_1.1/wall.png" type="Texture" id=8]
+[ext_resource path="res://1bitpack_kenney_1.1/lefthand.png" type="Texture" id=9]
+
+[sub_resource type="CapsuleShape" id=2]
+radius = 0.152954
+height = 1.0589
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.608963
 
-[sub_resource type="CapsuleShape" id=2]
-radius = 0.119911
-height = 0.151178
+[sub_resource type="SphereShape" id=3]
+radius = 0.207787
 
 [node name="World" type="Spatial"]
+
+[node name="Dagger" type="RigidBody" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77857, 0, -1.92935 )
+script = ExtResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Dagger"]
+transform = Transform( 0.026299, 0, -0.999654, 0, 1, 0, 0.999654, 0, 0.026299, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Dagger/CollisionShape"]
+transform = Transform( 0.0213752, 0.0210714, 0.999549, -0.702029, 0.712148, 0, -0.711828, -0.701712, 0.030015, 0, 0, 0 )
+pixel_size = 0.1
+texture = ExtResource( 7 )
+region_enabled = true
+region_rect = Rect2( 544, 96, 16, 16 )
 
 [node name="Player" type="KinematicBody" parent="."]
 script = ExtResource( 2 )
@@ -44,6 +65,26 @@ current = true
 [node name="RayCast" type="RayCast" parent="Player"]
 cast_to = Vector3( 0, 0, -2000 )
 
+[node name="WeaponPoint" type="Sprite3D" parent="Player"]
+transform = Transform( 0.225394, -0.47097, 0.852868, -0.612372, 0.612372, 0.5, -0.757758, -0.63497, -0.150384, 0.6, 0.7, -1.5 )
+pixel_size = 0.1
+texture = ExtResource( 7 )
+region_enabled = true
+region_rect = Rect2( 544, 96, 16, 16 )
+
+[node name="LeftHand" type="Sprite3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.570197, -0.142949, -1.08487 )
+pixel_size = 0.03
+texture = ExtResource( 9 )
+region_rect = Rect2( 656, 0, 16, 16 )
+
+[node name="RightHand" type="Sprite3D" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.819598, -0.142949, -1.08487 )
+flip_h = true
+pixel_size = 0.03
+texture = ExtResource( 9 )
+region_rect = Rect2( 656, 0, 16, 16 )
+
 [node name="Enemy" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00724524, 0.000107288, -2.76281 )
 
@@ -59,30 +100,18 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.248257, -0.104706, -5.03479
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource( 4 )
 data = {
-"cells": PoolIntArray( 5, 0, 0, 6, 0, 0, 65532, 0, 1048576, -65534, 0, 1048577, -65532, 0, 1048577, -65531, 0, 0, -4, 0, 1048576, 5, 1, 1048576, 6, 1, 0, 65532, 1, 1048576, -65536, 1, 1048577, -65531, 1, 0, -65530, 1, 0, -4, 1, 1048576, -2, 1, 1048577, 6, 2, 0, 65532, 2, 1048576, -65534, 2, 1048577, -65532, 2, 1048577, -65530, 2, 1048577, -5, 2, 1048576, -4, 2, 1048576, 6, 3, 1048576, 65532, 3, 1048576, -65536, 3, 1048577, -65530, 3, 0, -5, 3, 1048576, -4, 3, 1048576, -2, 3, 1048577, 0, 4, 1048576, 1, 4, 1048576, 2, 4, 1048576, 6, 4, 1048576, 65532, 4, 1048576, 65533, 4, 1048576, 65534, 4, 1048576, 65535, 4, 1048576, -65536, 4, 1048576, -65535, 4, 1048577, -65533, 4, 1048577, -65531, 4, 1048577, -65530, 4, 1048576, -6, 4, 1048576, -5, 4, 1048576, -4, 4, 1048576, -3, 4, 1048576, -2, 4, 1048576, -1, 4, 1048576, 3, 5, 1048576, 4, 5, 1048576, 5, 5, 1048576, 6, 5, 1048576, -65533, 5, 0, -65532, 5, 0, -65531, 5, 0, -65530, 5, 0, -65523, 6, 1441792, -65536, 65529, 1048577, -2, 65529, 1048577, 1, 65530, 1048576, 2, 65530, 1048576, 3, 65530, 1048576, 4, 65530, 1048576, 5, 65530, 1048576, -65535, 65530, 1048576, -65534, 65530, 1048576, -65533, 65530, 1048576, -65532, 65530, 1048576, 5, 65531, 1048576, -65536, 65531, 1048577, -65531, 65531, 1048576, -2, 65531, 1048577, 5, 65532, 0, 65533, 65532, 1048576, -65534, 65532, 1048577, -65532, 65532, 1048577, -65531, 65532, 0, -3, 65532, 1048576, 5, 65533, 0, 65533, 65533, 1048576, -65536, 65533, 1048577, -65531, 65533, 0, -3, 65533, 1048576, -2, 65533, 1048577, 5, 65534, 0, 65533, 65534, 1048576, -65534, 65534, 1048577, -65532, 65534, 1048577, -65531, 65534, 1048576, -65527, 65534, 1441792, -3, 65534, 1048576, 5, 65535, 0, 65533, 65535, 1048576, -65536, 65535, 1048577, -65531, 65535, 0, -4, 65535, 1048577, -3, 65535, 1048576, -2, 65535, 1048577 )
+"cells": PoolIntArray( 5, 0, 0, 6, 0, 0, 65532, 0, 1048576, -65534, 0, 1048577, -65532, 0, 1048577, -65531, 0, 537001984, -65530, 0, 536870912, -4, 0, 1048576, 5, 1, 1048576, 6, 1, 0, 65532, 1, 1048576, -65536, 1, 1048577, -65531, 1, 536870912, -65530, 1, 536870912, -4, 1, 1048576, -2, 1, 1048577, 6, 2, 0, 65532, 2, 1048576, -65534, 2, 1048577, -65532, 2, 1048577, -65531, 2, -1610612735, -65530, 2, 0, -4, 2, 1048576, 6, 3, 1048576, 65532, 3, 1048576, -65536, 3, 1048577, -65530, 3, 0, -4, 3, 1048576, -2, 3, 1048577, 0, 4, 1048576, 1, 4, 1048576, 2, 4, 1048576, 6, 4, 1048576, 65532, 4, 1048576, 65533, 4, 1048576, 65534, 4, 1048576, 65535, 4, 1048576, -65536, 4, 1048576, -65535, 4, 0, -65534, 4, 536870913, -65533, 4, 1048577, -65531, 4, 1048577, -65530, 4, 0, -4, 4, 1048576, -3, 4, 1048576, -2, 4, 1048576, -1, 4, 1048576, 3, 5, 1048576, 4, 5, 1048576, 5, 5, 1048576, 6, 5, 1048576, -65533, 5, 0, -65532, 5, 0, -65531, 5, 0, -65530, 5, 0, -65523, 6, 1441792, -65536, 65529, 1048577, -2, 65529, 1048577, 1, 65530, 1048576, 2, 65530, 1048576, 3, 65530, 1048576, 4, 65530, 1048576, 5, 65530, 1048576, -65535, 65530, 1048576, -65534, 65530, 0, -65533, 65530, 1048576, -65532, 65530, 0, -65531, 65530, 537001984, 5, 65531, 1048576, -65536, 65531, 1048577, -65534, 65531, -1610612735, -65532, 65531, -1610612735, -65531, 65531, 537001984, -2, 65531, 1048577, 5, 65532, 0, 65533, 65532, 1048576, -65534, 65532, 537919489, -65532, 65532, 1048577, -65531, 65532, 537001984, -3, 65532, 1048576, 5, 65533, 0, 65533, 65533, 537919488, -65536, 65533, 1048577, -65531, 65533, 537001984, -3, 65533, 1048576, -2, 65533, 1074790401, 5, 65534, 0, 65533, 65534, 1048576, -65534, 65534, 537919489, -65532, 65534, 1074790401, -65531, 65534, 537001984, -65527, 65534, 1441792, -3, 65534, 1048576, 5, 65535, 0, 65533, 65535, 1048576, -65536, 65535, 1048577, -65531, 65535, 537001984, -4, 65535, 1048577, -3, 65535, 1048576, -2, 65535, 1048577 )
 }
 __meta__ = {
 "_editor_clip_": 0,
 "_editor_floor_": Vector3( 0, -1, 0 )
 }
 
-[node name="Dagger" parent="." instance=ExtResource( 6 )]
+[node name="RigidBody" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.59868, 2.42773, -6.89954 )
 
-[node name="Projectile" type="KinematicBody" parent="Dagger"]
-transform = Transform( -0.138671, -0.13159, 0.981557, -0.688342, 0.725386, 0, -0.712008, -0.675647, -0.191169, 0.467, 0.479, -0.831 )
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 3 )
 
-[node name="Sprite3D" type="Sprite3D" parent="Dagger/Projectile"]
-transform = Transform( 1, -5.96046e-08, 0, 0, 1, 0, 0, -1.49012e-08, 1, 0, 0, 0 )
-pixel_size = 0.05
-texture = ExtResource( 5 )
-region_enabled = true
-region_rect = Rect2( 544, 96, 16, 16 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Dagger/Projectile"]
-transform = Transform( 0.53691, -0.448723, -0.714405, -0.43001, 0.582993, -0.689355, 0.725823, 0.677323, 0.120059, 0, 0, 0 )
-shape = SubResource( 2 )
-
-[node name="RayCast" type="RayCast" parent="Dagger/Projectile"]
-transform = Transform( 0.78366, 0.131363, -0.607141, 0.620723, -0.127699, 0.773561, 0.0240855, -0.983075, -0.181613, 0, 0, 0 )
-enabled = true
-cast_to = Vector3( 0.5, 0, 0 )
+[node name="Sprite3D" type="Sprite3D" parent="RigidBody"]
+texture = ExtResource( 8 )

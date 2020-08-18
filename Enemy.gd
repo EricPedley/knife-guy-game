@@ -20,7 +20,7 @@ func _physics_process(delta):
 	vec_to_player = vec_to_player.normalized()
 	if raycast.is_colliding() and raycast.get_collider()==player:
 		animationPlayer.play("walk")
-		move_and_collide(vec_to_player*MOVE_SPEED*delta)
+		#move_and_collide(vec_to_player*MOVE_SPEED*delta)
 		$SpriteHolder.rotation.y = PI/2-Vector2(vec_to_player.x,vec_to_player.z).angle()
 	
 func set_player(p):

@@ -1,11 +1,12 @@
-extends Spatial
+extends RigidBody
 
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-onready var projectile = $Projectile
-onready var rayCast = $Projectile/RayCast
+onready var player = get_node("../Player")
+
+
 var velocity=Vector3.ZERO
 var shooting=false
 var parent = null
@@ -14,25 +15,16 @@ func set_parent(newParent):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_parent(get_node("../Player"))
-	$AnimationPlayer.play("Hover")
-func _physics_process(delta):
-	if($Projectile!=null):
-		print($Projectile)
-		$Projectile.translation = parent.translation + Vector3(0.5,0.5,-1).rotated(Vector3(1,0,0),parent.rotation.x).rotated(Vector3(0,1,0),parent.rotation.y)
-		$Projectile.rotation.y = parent.rotation.y+PI/2
-	if shooting:
-		$Projectile.move_and_collide(velocity*delta)
-		if rayCast.is_colliding():
-			shooting=false
-			velocity=Vector3.ZERO
-			var impactPoint = rayCast.get_collision_point()
-			$AnimationPlayer.play("still")
-			rayCast.get_collider().add_child(duplicate())
-			get_parent().remove_child(self);
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	#$AnimationPlayer.play("Hover")
+	
+func _process(delta):
+	if parent==player and not shooting:
+		if mode!=MODE_STATIC:
+			mode=MODE_STATIC
+		var plPos = player.WeaponPoint.global_transform.origin
+		global_transform.origin = plPos
+		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))
 func shoot(vector):
+	mode=MODE_RIGID
 	shooting=true
-	velocity = vector.normalized()*500
+	apply_central_impulse(vector.normalized()*60)
