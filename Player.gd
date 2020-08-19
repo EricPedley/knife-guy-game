@@ -19,12 +19,7 @@ func _process(delta):
 	if(Input.is_action_pressed("exit")):
 		get_tree().quit()
 	if(Input.is_action_just_pressed("rclick")):
-		var aimDir 
-		if($RayCast.is_colliding()):
-			var destination = $RayCast.get_collision_point()
-			aimDir = $WeaponPoint.global_transform.origin.direction_to(destination)
-		else:
-			aimDir = Vector3(0,0,-1).rotated(Vector3(0,1,0),rotation.y)
+		var aimDir = $WeaponPoint.global_transform.origin.direction_to($RayCast.get_collision_point())
 		get_node("../Dagger").shoot(aimDir)
 	
 func _physics_process(delta):
