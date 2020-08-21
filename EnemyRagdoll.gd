@@ -1,5 +1,6 @@
 extends RigidBody
 
+const IS_RAGDOLL = true
 
 onready var WeaponPoint = $WeaponPoint
 func _ready():

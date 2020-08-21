@@ -10,6 +10,7 @@ onready var WeaponPoint = $WeaponPoint
 var ragdollScene = preload("res://EnemyRagdoll.tscn")
 var player
 var dead = false
+var health = 1
 
 func _ready():
 	add_to_group("enemies")
@@ -32,6 +33,15 @@ func _physics_process(delta):
 func set_player(p):
 	player=p
 	
+func get_hit():
+	health-=1
+	$CPUParticles.global_transform = $WeaponPoint.global_transform
+	$CPUParticles.set_emitting(true)
+	if health<1:
+		return die()
+	else:
+		return self
+
 func die():
 	print("rip")
 	var ragdollInstance = ragdollScene.instance()
