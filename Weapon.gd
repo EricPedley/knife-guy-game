@@ -18,6 +18,8 @@ func _ready():
 	
 func _process(delta):
 	if(Input.is_action_just_pressed("lclick")):
+		if parent!=null and parent.is_in_group("enemies"):
+			parent.remove_child(parent.get_node("CollisionShape2"))
 		returnToPlayer()
 
 func _physics_process(delta):
@@ -37,6 +39,9 @@ func _physics_process(delta):
 			parent=collider
 			parent.WeaponPoint.global_transform = global_transform
 			parent = parent.get_hit()
+			var coll2 = $CollisionShape.duplicate()
+			parent.add_child(coll2,true)
+			coll2.global_transform=global_transform
 			if parent.IS_RAGDOLL == true:
 				add_collision_exception_with(parent)
 				parent.go_flying(global_transform.origin,velocity)
@@ -45,7 +50,7 @@ func _physics_process(delta):
 		global_transform = parent.WeaponPoint.global_transform
 		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))
 func shoot(vector):
-	$CollisionShape.set_disabled(false)
+	#$CollisionShape.set_disabled(false)
 	shooting=true
 	velocity = vector.normalized()*50
 	look_at(velocity,Vector3(0,1,0))

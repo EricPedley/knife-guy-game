@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Enemy.gd" type="Script" id=1]
 
@@ -8,6 +8,58 @@ albedo_color = Color( 0.901961, 0, 0, 1 )
 [sub_resource type="CubeMesh" id=2]
 material = SubResource( 1 )
 size = Vector3( 0.1, 0.1, 0.1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Splurt"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CPUParticles:speed_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CPUParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CPUParticles:mesh:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.2, 0.2, 0.2 ), Vector3( 0.1, 0.1, 0.1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CPUParticles:amount")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 12, 6 ]
+}
 
 [node name="Enemy" type="KinematicBody" groups=[
 "enemies",
@@ -21,13 +73,15 @@ enabled = true
 transform = Transform( 1, -1.78814e-07, -1.06581e-14, 1.78814e-07, 1, -1.13687e-13, 4.26326e-14, 1.42109e-14, 1, 0, 0, 0 )
 
 [node name="CPUParticles" type="CPUParticles" parent="."]
-emitting = false
 amount = 6
-lifetime = 0.33
-speed_scale = 0.6
-explosiveness = 0.14
+lifetime = 0.23
+speed_scale = 0.5
+explosiveness = 0.2
 randomness = 0.03
 mesh = SubResource( 2 )
 direction = Vector3( 0, 0, 1 )
 spread = 32.91
-initial_velocity = 2.0
+initial_velocity = 5.0
+
+[node name="BloodAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Splurt = SubResource( 3 )
