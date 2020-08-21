@@ -20,15 +20,16 @@ func _physics_process(delta):
 	if player==null:
 		return
 	if not dead:	
-		var vec_to_player = player.translation-translation
+		var vec_to_player = player.global_transform.origin-global_transform.origin
 		raycast.cast_to = vec_to_player*1.1
-		vec_to_player = vec_to_player.normalized()
 		if raycast.is_colliding() and raycast.get_collider()==player:
 			animationPlayer.play("walk")
-		#set_linear_velocity(Vector3())
-		#apply_central_impulse(vec_to_player * MOVE_SPEED)
-		move_and_collide(vec_to_player*MOVE_SPEED*delta)
-		rotation.y = PI/2-Vector2(vec_to_player.x,vec_to_player.z).angle()
+			if vec_to_player.length()<5:
+				print(translation)
+			vec_to_player = vec_to_player.normalized()
+			move_and_collide(vec_to_player*MOVE_SPEED*delta)
+			rotation.y = PI/2-Vector2(vec_to_player.x,vec_to_player.z).angle()
+		
 	
 func set_player(p):
 	player=p
