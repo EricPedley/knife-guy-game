@@ -38,8 +38,8 @@ func _physics_process(delta):
 		if collider.is_in_group("enemies"):
 			add_collision_exception_with(collider)
 			parent=collider
-			parent = parent.die()
 			parent.WeaponPoint.global_transform = global_transform
+			parent = parent.die()
 			parent.go_flying(global_transform.origin,velocity)
 		velocity=Vector3()
 	elif parent!=null and (parent==player or parent.is_in_group("enemies")):

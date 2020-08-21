@@ -5,7 +5,7 @@ const acceleration = 1
 onready var raycast = $RayCast
 onready var sprite = $Sprite3D
 onready var animationPlayer = $AnimationPlayer
-onready var WeaponPoint = $CollisionShape/Sprite3D/WeaponPoint
+onready var WeaponPoint = $WeaponPoint
 
 var ragdollScene = preload("res://EnemyRagdoll.tscn")
 var player
@@ -27,7 +27,7 @@ func _physics_process(delta):
 		#set_linear_velocity(Vector3())
 		#apply_central_impulse(vec_to_player * MOVE_SPEED)
 		move_and_collide(vec_to_player*MOVE_SPEED*delta)
-		$CollisionShape.rotation.y = PI/2-Vector2(vec_to_player.x,vec_to_player.z).angle()
+		rotation.y = PI/2-Vector2(vec_to_player.x,vec_to_player.z).angle()
 	
 func set_player(p):
 	player=p

@@ -1,7 +1,7 @@
 extends RigidBody
 
 
-onready var WeaponPoint = $CollisionShape/Sprite3D/WeaponPoint
+onready var WeaponPoint = $WeaponPoint
 func _ready():
 	set_angular_damp(-15)
 	set_mass(10)
