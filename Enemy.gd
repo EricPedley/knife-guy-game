@@ -44,7 +44,7 @@ func get_hit():
 	$BloodAnimationPlayer.play("Splurt")
 	health-=1
 	$CPUParticles.global_transform = $WeaponPoint.global_transform
-	$CPUParticles.set_emitting(true)
+	#$CPUParticles.set_emitting(true)
 	if health<1:
 		return die()
 	else:

@@ -48,9 +48,7 @@ func _physics_process(delta):
 		velocity=Vector3()
 	elif parent!=null and (parent==player or parent.is_in_group("enemies")):
 		global_transform = parent.WeaponPoint.global_transform
-		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))
 func shoot(vector):
-	#$CollisionShape.set_disabled(false)
 	shooting=true
 	velocity = vector.normalized()*50
 	look_at(velocity,Vector3(0,1,0))
