@@ -35,13 +35,13 @@ func _physics_process(delta):
 		var collider = collision.collider
 		shooting=false
 		returning=false
-		velocity=Vector3()
 		if collider.is_in_group("enemies"):
-			$CollisionShape.set_disabled(true)
+			add_collision_exception_with(collider)
 			parent=collider
-			parent.die()
+			parent = parent.die()
 			parent.WeaponPoint.global_transform = global_transform
-			
+			parent.go_flying(global_transform.origin,velocity)
+		velocity=Vector3()
 	elif parent!=null and (parent==player or parent.is_in_group("enemies")):
 		global_transform = parent.WeaponPoint.global_transform
 		#apply_central_impulse((plPos-myPos).normalized()*plPos.distance_to(myPos))

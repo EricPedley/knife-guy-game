@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://1bitpack_kenney_1.1/trees.png" type="Texture" id=1]
+
+[sub_resource type="CylinderShape" id=1]
+radius = 1.1897
+height = 11.6736
+
+[node name="Tree1" type="Sprite3D"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.31997, 5.7082, 0 )
+pixel_size = 0.4
+billboard = 2
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 12, 29 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+shape = SubResource( 1 )
