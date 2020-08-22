@@ -4,7 +4,8 @@ const MOVE_SPEED =10
 const MOUSE_SENS = 0.5
 onready var WeaponPoint = $WeaponPoint
 var health = 12
-
+var moving=true
+#https://www.youtube.com/watch?v=DMc641-k9B8&ab_channel=WhiteBatAudio maybe use this as audio?
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	yield(get_tree(),"idle_frame")
@@ -23,6 +24,7 @@ func _process(delta):
 	if(Input.is_action_just_pressed("rclick")):
 		var aimDir = $WeaponPoint.global_transform.origin.direction_to($RayCast.get_collision_point())
 		get_node("../Dagger").shoot(aimDir)
+		$KnifeThrowSound.play()
 	
 func _physics_process(delta):
 	var move_vec = Vector3()
@@ -35,6 +37,13 @@ func _physics_process(delta):
 	if Input.is_action_pressed("right"):
 		move_vec.x+=1
 	move_vec = move_vec.normalized();
+	if(move_vec!=Vector3()):
+		if(not moving):
+			moving=true
+			$Running.play()
+	else:
+		moving=false
+		$Running.stop()
 	move_vec = move_vec.rotated(Vector3(0,1,0),rotation.y)
 	move_and_collide(move_vec*MOVE_SPEED*delta)
 	

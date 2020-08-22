@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/White Bat Audio - The System Has Failed.ogg-ab32682dbf1aa41fa30a5e7bdfbc7361.oggstr"
+
+[deps]
+
+source_file="res://1bitpack_kenney_1.1/White Bat Audio - The System Has Failed.ogg"
+dest_files=[ "res://.import/White Bat Audio - The System Has Failed.ogg-ab32682dbf1aa41fa30a5e7bdfbc7361.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

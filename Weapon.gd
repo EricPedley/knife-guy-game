@@ -21,6 +21,7 @@ func _process(delta):
 		if parent!=null and parent.is_in_group("enemies"):
 			parent.remove_child(parent.get_node("CollisionShape2"))
 		returnToPlayer()
+		player.get_node("KnifeThrowSound").play()
 
 func _physics_process(delta):
 	if shooting:

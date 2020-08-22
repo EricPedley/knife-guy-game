@@ -41,6 +41,7 @@ func set_player(p):
 	player=p
 	
 func get_hit():
+	$StabSound.play()
 	$BloodAnimationPlayer.play("Splurt")
 	health-=1
 	$CPUParticles.global_transform = $WeaponPoint.global_transform
