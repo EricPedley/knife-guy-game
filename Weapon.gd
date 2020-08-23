@@ -16,12 +16,6 @@ func _ready():
 	set_parent(player)
 	#$AnimationPlayer.play("Hover")
 	
-func _process(delta):
-	if(Input.is_action_just_pressed("lclick")):
-		if parent!=null and parent.is_in_group("enemies"):
-			parent.remove_child(parent.get_node("CollisionShape2"))
-		returnToPlayer()
-		player.get_node("KnifeThrowSound").play()
 
 func _physics_process(delta):
 	if shooting:
@@ -29,6 +23,8 @@ func _physics_process(delta):
 			parent=player
 			shooting=false
 			returning=false
+			set_visible(false)
+			player.show_dagger()
 		var collision = move_and_collide(velocity*delta)
 		if collision==null:
 			return
@@ -36,6 +32,8 @@ func _physics_process(delta):
 		shooting=false
 		returning=false
 		if collider.is_in_group("enemies"):
+			if collider==parent:
+				pass
 			add_collision_exception_with(collider)
 			parent=collider
 			parent.WeaponPoint.global_transform = global_transform
@@ -49,12 +47,12 @@ func _physics_process(delta):
 		velocity=Vector3()
 	elif parent!=null and (parent==player or parent.is_in_group("enemies")):
 		global_transform = parent.WeaponPoint.global_transform
+		
 func shoot(vector):
+	if parent!=null and parent.is_in_group("enemies"):
+		parent.remove_child(parent.get_node("CollisionShape2"))
+		remove_collision_exception_with(parent)
 	shooting=true
 	velocity = vector.normalized()*50
 	look_at(velocity,Vector3(0,1,0))
 	parent=null
-func returnToPlayer():
-	remove_collision_exception_with(parent)
-	shoot(global_transform.origin.direction_to(player.WeaponPoint.global_transform.origin))
-	returning=true
