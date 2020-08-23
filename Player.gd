@@ -7,11 +7,21 @@ const ACCELERATION=20
 const JUMP = 15
 onready var WeaponPoint = $Head/WeaponPoint
 onready var head = $Head
-var health = 12
+var health = 120
 var moving=true
 var velocity = Vector3()
 var fall = Vector3()
 var jumping=false
+
+func take_damage(amount):
+	health-=amount;
+	if(health<=0):
+		die()
+	$Head/CanvasLayer/Health.set_text(str(health)+"/120 hp")
+func die():
+	print("rip player")
+	get_tree().change_scene("res://MainMenu.tscn")
+
 #https://www.youtube.com/watch?v=DMc641-k9B8&ab_channel=WhiteBatAudio maybe use this as audio?
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -52,7 +62,7 @@ func _physics_process(delta):
 		move_vec.x+=1
 	move_vec = move_vec.normalized();
 	if(move_vec!=Vector3()):
-		if(not moving):
+		if(not moving and is_on_floor()):
 			moving=true
 			$Running.play()
 	else:

@@ -67,6 +67,7 @@ tracks/3/keys = {
 script = ExtResource( 1 )
 
 [node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.377041, 0 )
 enabled = true
 
 [node name="WeaponPoint" type="Spatial" parent="."]
