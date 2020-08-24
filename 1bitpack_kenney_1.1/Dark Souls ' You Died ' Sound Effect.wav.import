@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Dark Souls ' You Died ' Sound Effect.wav-cd0d6d2a5931a63d53bd6136bff3f198.sample"
+
+[deps]
+
+source_file="res://1bitpack_kenney_1.1/Dark Souls ' You Died ' Sound Effect.wav"
+dest_files=[ "res://.import/Dark Souls ' You Died ' Sound Effect.wav-cd0d6d2a5931a63d53bd6136bff3f198.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

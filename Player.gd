@@ -12,6 +12,7 @@ var moving=true
 var velocity = Vector3()
 var fall = Vector3()
 var jumping=false
+var mouseCaptured=false;
 
 func take_damage(amount):
 	health-=amount;
@@ -19,33 +20,36 @@ func take_damage(amount):
 		die()
 	$Head/CanvasLayer/Health.set_text(str(health)+"/120 hp")
 func die():
-	print("rip player")
-	get_tree().change_scene("res://MainMenu.tscn")
+	get_tree().change_scene("res://DeadScreen.tscn")
 
 #https://www.youtube.com/watch?v=DMc641-k9B8&ab_channel=WhiteBatAudio maybe use this as audio?
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	yield(get_tree(),"idle_frame")
 	get_tree().call_group("enemies","set_player",self);
 
 func _input(event):
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and mouseCaptured:
 		rotation_degrees.y -= MOUSE_SENS*event.relative.x
 		var newRotationDegrees = head.rotation_degrees.x - MOUSE_SENS*event.relative.y
 		if(newRotationDegrees<90&&newRotationDegrees>-90):
 			head.rotation_degrees.x = newRotationDegrees
+	if event is InputEventMouseButton:
+		if not mouseCaptured:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			mouseCaptured=true
 	
 func _process(delta):
 	if(Input.is_action_pressed("exit")):
-		get_tree().quit()
-	if(Input.is_action_just_pressed("rclick")):
+		mouseCaptured=false
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if(Input.is_action_just_pressed("lclick")):
 		var dagger = get_node("../Dagger")
 		var aimDir = dagger.global_transform.origin.direction_to($Head/RayCast.get_collision_point())
 		dagger.shoot(aimDir)
 		dagger.set_visible(true)
 		$Head/WeaponPoint/DaggerSprite.set_visible(false)
 		$KnifeThrowSound.play()
-	if(Input.is_action_just_pressed("lclick")):
+	if(Input.is_action_just_pressed("rclick")):
 		var dagger = get_node("../Dagger")
 		dagger.shoot(dagger.global_transform.origin.direction_to(WeaponPoint.global_transform.origin))
 		dagger.returning=true
